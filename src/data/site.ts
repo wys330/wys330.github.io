@@ -1,7 +1,7 @@
 export const site = {
-  title: 'WSY 的博客',
+  title: 'WYS 的博客',
   description: '记录工程实践、技术学习和问题复盘的个人博客。',
-  author: 'WSY',
+  author: 'WYS',
   url: 'https://wys330.github.io',
   nav: [
     { href: '/', label: '首页' },

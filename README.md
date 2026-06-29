@@ -1,4 +1,4 @@
-# WSY 的博客
+# WYS 的博客
 
 基于 Astro 的个人技术笔记博客，部署到 GitHub Pages。
 

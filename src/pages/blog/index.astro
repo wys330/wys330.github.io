@@ -7,7 +7,7 @@ import { sortPosts } from '@/utils/posts';
 const posts = sortPosts((await getCollection('blog')).filter((post) => !post.data.draft));
 ---
 
-<BaseLayout title="文章" description="WSY 的技术笔记文章列表">
+<BaseLayout title="文章" description="WYS 的技术笔记文章列表">
   <section class="page-heading">
     <span class="eyebrow">Archive</span>
     <h1>文章</h1>

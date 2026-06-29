@@ -1,0 +1,19 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getAllTags } from '@/utils/posts';
+
+const posts = (await getCollection('blog')).filter((post) => !post.data.draft);
+const tags = getAllTags(posts);
+---
+
+<BaseLayout title="标签" description="按标签浏览 WSY 的技术笔记">
+  <section class="page-heading">
+    <span class="eyebrow">Tags</span>
+    <h1>标签</h1>
+    <p>按主题整理文章，方便查找同一类问题和技术栈。</p>
+  </section>
+  <div class="tag-cloud">
+    {tags.map((tag) => <a href={`/tags/${encodeURIComponent(tag.name)}/`}>{tag.name}<span>{tag.count}</span></a>)}
+  </div>
+</BaseLayout>

@@ -1,0 +1,19 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PostCard from '@/components/PostCard.astro';
+import { sortPosts } from '@/utils/posts';
+
+const posts = sortPosts((await getCollection('blog')).filter((post) => !post.data.draft));
+---
+
+<BaseLayout title="文章" description="WSY 的技术笔记文章列表">
+  <section class="page-heading">
+    <span class="eyebrow">Archive</span>
+    <h1>文章</h1>
+    <p>按发布时间倒序排列，适合回查技术笔记和实践记录。</p>
+  </section>
+  <div class="post-list">
+    {posts.map((post) => <PostCard post={post} />)}
+  </div>
+</BaseLayout>

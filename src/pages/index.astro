@@ -1,0 +1,38 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PostCard from '@/components/PostCard.astro';
+import { site } from '@/data/site';
+import { sortPosts } from '@/utils/posts';
+
+const posts = sortPosts((await getCollection('blog')).filter((post) => !post.data.draft));
+const latestPosts = posts.slice(0, 5);
+---
+
+<BaseLayout title={site.title} description={site.description}>
+  <section class="hero-section">
+    <div class="eyebrow">Tech Notes</div>
+    <h1>WSY 的博客</h1>
+    <p>
+      这里记录技术学习、工程实践和问题复盘。内容偏向可复用的笔记：把踩过的坑、验证过的方案、
+      以及值得长期保存的知识整理下来。
+    </p>
+    <div class="hero-actions">
+      <a class="button primary" href="/blog/">查看文章</a>
+      <a class="button secondary" href="/rss.xml">订阅 RSS</a>
+    </div>
+  </section>
+
+  <section class="section-block">
+    <div class="section-heading">
+      <div>
+        <span class="eyebrow">Latest</span>
+        <h2>最新文章</h2>
+      </div>
+      <a href="/blog/">全部文章</a>
+    </div>
+    <div class="post-list">
+      {latestPosts.map((post) => <PostCard post={post} />)}
+    </div>
+  </section>
+</BaseLayout>

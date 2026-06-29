@@ -1,0 +1,31 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PostCard from '@/components/PostCard.astro';
+import { getAllTags, sortPosts } from '@/utils/posts';
+
+export async function getStaticPaths() {
+  const posts = (await getCollection('blog')).filter((post) => !post.data.draft);
+  return getAllTags(posts).map((tag) => ({
+    params: { tag: tag.name },
+    props: { tag: tag.name },
+  }));
+}
+
+const { tag } = Astro.props;
+const posts = sortPosts(
+  (await getCollection('blog')).filter((post) => !post.data.draft && post.data.tags.includes(tag)),
+);
+---
+
+<BaseLayout title={`标签：${tag}`} description={`WSY 的 ${tag} 主题技术笔记`}>
+  <section class="page-heading">
+    <a class="back-link" href="/tags/">← 返回标签</a>
+    <span class="eyebrow">Tag</span>
+    <h1>{tag}</h1>
+    <p>共 {posts.length} 篇文章。</p>
+  </section>
+  <div class="post-list">
+    {posts.map((post) => <PostCard post={post} />)}
+  </div>
+</BaseLayout>

@@ -1,0 +1,21 @@
+---
+import { formatDate, getReadingMinutes, type BlogPost } from '@/utils/posts';
+
+type Props = {
+  post: BlogPost;
+};
+
+const { post } = Astro.props;
+---
+
+<article class="post-card">
+  <div class="post-card-meta">
+    <time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time>
+    <span>{getReadingMinutes(post.body ?? '')}</span>
+  </div>
+  <h2><a href={`/blog/${post.id}/`}>{post.data.title}</a></h2>
+  <p>{post.data.description}</p>
+  <div class="tag-row">
+    {post.data.tags.map((tag) => <a href={`/tags/${encodeURIComponent(tag)}/`}>{tag}</a>)}
+  </div>
+</article>
